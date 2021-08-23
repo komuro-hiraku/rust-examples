@@ -74,6 +74,11 @@ mod test {
 
     #[test]
     fn using_other_iterator_tarit_methods() {
+
+        // (1, 2, 3, 4, 5, None) x (2, 3, 4, 5, None)
+        // => 2, 6, 12, 20
+        // => 6, 12 
+        // => 18
         let sum: u32 = Counter::new().zip(Counter::new().skip(1))   // 先頭をスキップ
                                     .map(|(a, b)| a * b)            // 二つの Counter を掛け合わせる
                                     .filter(|x| x % 3 == 0)         // 3 で割り切れるものを Filter
