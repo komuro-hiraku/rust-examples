@@ -29,6 +29,17 @@ fn main() {
     hello(&(*m)[..]); // 参照外し型強制がなかったらこうなる
     // (*m) で MyBox<String> を String に参照外し
     // &, [..] で String を &str （文字列スライス）に変換
+
+
+    // Drop trait
+    let _c = CustomSmartPointer{ data: String::from("my stuff")};
+    let _d = CustomSmartPointer{ data: String::from("other stuff")};
+    // _c.drop(); // デストラクタを明示的に呼び出せない。Compile Error
+    
+    println!("CustomSmartPointers created.");
+    drop(_c);
+    drop(_d);
+    println!("CustomSmartPointers dropped before the end of main.");
 }
 
 struct MyBox<T>(T);
@@ -49,4 +60,15 @@ impl<T> Deref for MyBox<T> {
 
 fn hello(name: &str) {
     println!("Hello, {}!", name);
+}
+
+// Drop trait
+struct CustomSmartPointer {
+    data: String,
+}
+
+impl Drop for CustomSmartPointer {
+    fn drop(&mut self) {
+        println!("Dropping CustomSmartPointer with data: {} !", self.data);
+    }
 }
