@@ -1,4 +1,4 @@
-use std::rc::Rc;
+use std::rc::{Rc, Weak};
 use std::cell::RefCell;
 use List::{Cons, Nil};
 
@@ -20,7 +20,8 @@ impl List {
 #[derive(Debug)]
 struct Node {
     value: i32,
-    children: RefCell<Vec<Rc<Node>>>,
+    parent: RefCell<Weak<Node>>,        // 親へは弱い参照
+    children: RefCell<Vec<Rc<Node>>>,   // 子は強い参照
 }
 
 fn main() {
@@ -54,10 +55,25 @@ fn main() {
 
     let leaf = Rc::new(Node {
         value: 3,
-        children: RefCell::new(vec![])
+        parent: RefCell::new(Weak::new()),
+        children: RefCell::new(vec![])      // 子供なし
     });
 
+    // leaf の親
+    println!("leaf parent = {:?}", leaf.parent.borrow().upgrade());
+    println!(
+        "leaf strong = {}, weak = {}",
+        Rc::strong_count(&leaf),
+        Rc::weak_count(&leaf),
+    );
+
     let branch = Rc::new(Node {
-        
-    })
+        value: 5,
+        parent: RefCell::new(Weak::new()),
+        children: RefCell::new(vec![Rc::clone(&leaf)])  // leaf を子に持つ
+    });
+
+    *leaf.parent.borrow_mut() = Rc::downgrade(&branch); // Rc<Node> から Weak<Node> へ
+
+    println!("leaf parent = {:?}", leaf.parent.borrow().upgrade());  
 }
