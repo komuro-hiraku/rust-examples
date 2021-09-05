@@ -1,7 +1,6 @@
 use oauth2::basic::BasicClient;
 use oauth2::{ClientId, ClientSecret, TokenUrl, RedirectUrl, AuthUrl, PkceCodeChallenge, CsrfToken, Scope, AuthorizationCode};
 use std::io;
-use oauth2::curl::http_client;
 use oauth2::reqwest::http_client;
 
 fn main() {
@@ -31,7 +30,7 @@ fn main() {
 
     println!("Browse to: {}", auth_url);
 
-    println!("Input Get Auth_code")
+    println!("Input Get Auth_code");
     let mut auth_code = String::new();
     io::stdin().read_line(&mut auth_code)
         .expect("Failed to read line");
