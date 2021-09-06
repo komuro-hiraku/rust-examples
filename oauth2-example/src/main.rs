@@ -8,6 +8,7 @@ fn main() {
     // blocking access
     println!("OAuth2.0 Authorization Code Grant flow Sample");
 
+    // TODO: Get Environment Variables
     let client = BasicClient::new(
         ClientId::new("CLIENT_ID".to_string()),
         Some(ClientSecret::new("CLIENT_SECRET".to_string())),
