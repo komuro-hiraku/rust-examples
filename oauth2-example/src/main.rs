@@ -42,4 +42,5 @@ fn main() {
             .set_pkce_verifier(pkce_verifier)
             .request(http_client)?;
 
+    println!("Token Result: {:?}", token_result);
 }

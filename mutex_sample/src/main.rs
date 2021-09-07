@@ -7,6 +7,7 @@ fn main() {
     let mut handles = vec![];
 
     for _ in 0..10 {
+        // counter は不変なのに中身操作できる。RefCell<T> と同じような感じ
         let counter = Arc::clone(&counter);
         let handle = thread::spawn(move || {
             let mut num = counter.lock().unwrap();
