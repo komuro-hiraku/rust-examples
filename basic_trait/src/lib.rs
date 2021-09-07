@@ -1,12 +1,14 @@
+// https://raw.githubusercontent.com/rust-lang/book/main/listings/ch17-oop/listing-17-07/src/lib.rs
 pub trait Draw {
     fn draw(&self);
 }
 
-pub struct Screen<T: Draw> {
-    pub components: Vec<Box<Draw>>,
+pub struct Screen {
+    pub components: Vec<Box<dyn Draw>>,
 }
 
-impl<T> Screen<T> {
+impl Screen
+{
     pub fn run(&self) {
         for component in self.components.iter() {
             component.draw();
@@ -22,6 +24,6 @@ pub struct Button {
 
 impl Draw for Button {
     fn draw(&self) {
-        todo!()
+        println!("width: {}, height: {}, label: {}", self.width, self.height, self.label);
     }
 }

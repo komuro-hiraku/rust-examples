@@ -9,7 +9,7 @@ struct SelectBox {
 
 impl Draw for SelectBox {
     fn draw(&self) {
-        todo!()
+        println!("width: {}, height: {}, options: {:?}", self.width, self.height, self.options);
     }
 }
 
@@ -30,7 +30,7 @@ fn main() {
                 height: 10,
                 label: String::from("OK"),
             }),
-        ]
+        ],
     };
 
     // Component を描画
