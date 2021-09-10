@@ -77,6 +77,22 @@ impl State for PendingReview {
     }
 
     fn approve(self: Box<Self>) -> Box<State> {
+        Box::new(FinallyReview {})
+    }
+
+    fn reject(self: Box<Self>) -> Box<State> {
+        Box::new(Draft {})
+    }
+}
+
+struct FinallyReview {}
+
+impl State for FinallyReview {
+    fn request_review(self: Box<Self>) -> Box<State> {
+        self
+    }
+
+    fn approve(self: Box<Self>) -> Box<State> {
         Box::new(Published {})
     }
 
@@ -106,7 +122,7 @@ impl State for Published {
     }
 
     // 追加課題
-    // 記事の状態をPendingReviewからDraftに戻すrejectメソッドを追加する。
-    // 状態がPublishedに変化させられる前にapproveを2回呼び出す必要があるようにする。
+    // 記事の状態をPendingReviewからDraftに戻すrejectメソッドを追加する → Pass
+    // 状態がPublishedに変化させられる前にapproveを2回呼び出す必要があるようにする → 
     // 記事がDraft状態の時のみテキスト内容をユーザが追加できるようにする。 ヒント: ステートオブジェクトに内容について変わる可能性のあるものの責任を持たせつつも、 Postを変更することには責任を持たせない。
 }
