@@ -11,6 +11,14 @@ fn main() {
     post.request_review();
     assert_eq!("", post.content());
 
+    // Draft へ戻す
+    post.reject();
+    post.approve();
+    assert_eq!("", post.content()); // Approve しても変わらない
+
+    post.request_review();
+    assert_eq!("", post.content());
+
     post.approve();
     assert_eq!("I ate a salad for lunch today", post.content());
 }
