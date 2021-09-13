@@ -5,25 +5,10 @@ use blog::Post;
 fn main() {
     let mut post = Post::new();
 
-    post.add_text("I ate a salad for lunch today");
-    assert_eq!("", post.content());
+    post.add_text("I ate a slad for lunch today");
 
-    post.request_review();
-    assert_eq!("", post.content());
+    let post = post.request_review();
+    let post = post.approve();
 
-    // Draft へ戻す
-    post.reject();
-    post.approve();
-    assert_eq!("", post.content()); // Approve しても変わらない
-
-    post.request_review();
-    assert_eq!("", post.content());
-
-    // 1 回目
-    post.approve();
-    assert_eq!("", post.content());
-
-    // 2 回目
-    post.approve();
-    assert_eq!("I ate a salad for lunch today", post.content());
+    assert_eq!("I ate a slad for lunch today", post.content());
 }
