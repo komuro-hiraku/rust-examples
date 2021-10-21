@@ -12,10 +12,10 @@ fn main() {
     let client = BasicClient::new(
         ClientId::new("CLIENT_ID".to_string()),
         Some(ClientSecret::new("CLIENT_SECRET".to_string())),
-        AuthUrl::new("AUTH_URL".to_string())?,
-        Some(TokenUrl::new("TOKEN_URL".to_string())?)
+        AuthUrl::new("AUTH_URL".to_string()).unwrap(),
+        Some(TokenUrl::new("TOKEN_URL".to_string()).unwrap())
     )
-        .set_redirect_uri(RedirectUrl::new("REDIRECT_URL".to_string())?);
+        .set_redirect_uri(RedirectUrl::new("REDIRECT_URL".to_string()).unwrap());
 
     // PKCE Challenge
     let (pkce_challenge, pkce_verifier) = PkceCodeChallenge::new_random_sha256();
@@ -40,7 +40,7 @@ fn main() {
         client
             .exchange_code(AuthorizationCode::new(auth_code.to_string()))
             .set_pkce_verifier(pkce_verifier)
-            .request(http_client)?;
+            .request(http_client).unwrap();
 
     println!("Token Result: {:?}", token_result);
 }
